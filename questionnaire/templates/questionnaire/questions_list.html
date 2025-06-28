@@ -1,0 +1,376 @@
+{% extends "home/homepage.html" %}
+
+{% block content %}
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<<<<<<< HEAD
+=======
+    <script>
+        document.cookie = "csrftoken={{ csrf_token }}";
+    </script>
+>>>>>>> 9bb57c1 (Updated project files with latest changes)
+</head>
+
+<div class="container mt-5">
+    <!-- Dropdown to Select Track -->
+    <div class="form-group">
+        <label for="interest">Select the track you want to take the quiz for:</label>
+        <select name="interest" id="interest" class="form-control">
+            <option value="" disabled selected>Select a track</option>
+            <option value="1">Artificial Intelligence</option>
+            <option value="2">Web Development</option>
+            <option value="3">Network</option>
+            <option value="4">Mobile App Development</option>
+            <option value="5">Data Science</option>
+            <option value="6">Data Engineering</option>
+            <option value="7">Cybersecurity</option>
+            <option value="8">Robotics</option>
+        </select>
+    </div>
+
+    <!-- Questions Container -->
+    <div id="questions-container" class="row mt-5">
+        {% if questions %}
+            {% for question in questions %}
+<<<<<<< HEAD
+                <div class="col-md-12 mb-4 question-card" data-trackid="{{ question.trackid }}" style="display: none;">
+                    <div class="card">
+=======
+            <div class="col-md-12 mb-4 question-card" data-questionid="{{ question.id }}" data-trackid="{{ question.trackid }}" style="display: none;">
+                <div class="card">
+>>>>>>> 9bb57c1 (Updated project files with latest changes)
+                        <div class="card-body">
+                            <h5 class="card-title">{{ question.question }}</h5>
+                            <form>
+                                <div class="form-check">
+                                    <input type="radio" id="option_a_{{ forloop.counter0 }}" name="answer_{{ forloop.counter0 }}" class="form-check-input" value="A">
+                                    <label class="form-check-label" for="option_a_{{ forloop.counter0 }}">A: {{ question.option_a }}</label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="radio" id="option_b_{{ forloop.counter0 }}" name="answer_{{ forloop.counter0 }}" class="form-check-input" value="B">
+                                    <label class="form-check-label" for="option_b_{{ forloop.counter0 }}">B: {{ question.option_b }}</label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="radio" id="option_c_{{ forloop.counter0 }}" name="answer_{{ forloop.counter0 }}" class="form-check-input" value="C">
+                                    <label class="form-check-label" for="option_c_{{ forloop.counter0 }}">C: {{ question.option_c }}</label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="radio" id="option_d_{{ forloop.counter0 }}" name="answer_{{ forloop.counter0 }}" class="form-check-input" value="D">
+                                    <label class="form-check-label" for="option_d_{{ forloop.counter0 }}">D: {{ question.option_d }}</label>
+                                </div>
+                            </form>
+                            <p class="mt-3"><strong>Difficulty Level:</strong> {{ question.q_level }}</p>
+                            <p><strong>Course Name:</strong> {{ question.course_name }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No questions available.</p>
+        {% endif %}
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="d-flex justify-content-between mt-4">
+        <button id="prev-btn" class="btn btn-secondary" disabled>Previous</button>
+        <button id="next-btn" class="btn btn-primary" disabled>Next</button>
+    </div>
+
+    <!-- Submit Button -->
+    <div id="submit-container" class="mt-4" style="display: none;">
+        <form method="get" action="{% url 'questionnaire_completed' %}">
+<<<<<<< HEAD
+            <button id="submit-quiz" type="submit" id="submit-btn" class="btn btn-primary" style="background-color: #89CFF0; color: darkblue;">
+                Submit
+            </button>
+=======
+            <button type="button" onclick="submitAnswer()">إرسال الإجابة</button>
+>>>>>>> 9bb57c1 (Updated project files with latest changes)
+        </form>
+    </div>
+</div>
+
+<script>
+<<<<<<< HEAD
+ document.addEventListener("DOMContentLoaded", function () {
+    const trackSelect = document.getElementById('interest');
+    const questionCards = document.querySelectorAll('.question-card');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const submitContainer = document.getElementById('submit-container');
+    const submitButton = document.getElementById('submit-quiz');
+    let currentIndex = 0;
+    let visibleQuestions = [];
+
+    // فلترة الأسئلة بناءً على الـ track المحدد
+    trackSelect.addEventListener("change", function () {
+        const selectedTrackId = this.value;
+
+        // إخفاء جميع الأسئلة أولًا
+        questionCards.forEach((card) => {
+            card.style.display = "none";
+        });
+
+        // عرض الأسئلة الخاصة بالـ track المحدد
+        visibleQuestions = Array.from(questionCards).filter(
+            (card) => card.dataset.trackid === selectedTrackId
+        );
+
+        // إعادة ضبط التنقل
+        currentIndex = 0;
+        if (visibleQuestions.length > 0) {
+            updateQuestionDisplay();
+            prevBtn.disabled = true;
+            nextBtn.disabled = false;
+        } else {
+            prevBtn.disabled = true;
+            nextBtn.disabled = true;
+            submitContainer.style.display = "none";
+        }
+    });
+
+    function updateQuestionDisplay() {
+        visibleQuestions.forEach((card, index) => {
+            card.style.display = index === currentIndex ? "block" : "none";
+        });
+
+        prevBtn.disabled = currentIndex === 0;
+        nextBtn.disabled = currentIndex === visibleQuestions.length - 1;
+
+        // إظهار زر الإرسال في آخر سؤال
+        submitContainer.style.display =
+            currentIndex === visibleQuestions.length - 1 ? "block" : "none";
+    }
+
+    prevBtn.addEventListener("click", function () {
+        if (currentIndex > 0) {
+            currentIndex--;
+            updateQuestionDisplay();
+        }
+    });
+
+    nextBtn.addEventListener("click", function () {
+        if (currentIndex < visibleQuestions.length - 1) {
+            currentIndex++;
+            updateQuestionDisplay();
+        }
+    });
+
+    // إرسال الإجابات إلى السيرفر
+    submitButton.addEventListener('click', function () {
+        const answers = [];
+        let allAnswered = true;
+
+        visibleQuestions.forEach((card) => {
+            const questionId = card.getAttribute('data-questionid');  // تعديل لالتقاط المعرف الصحيح
+            const selectedOption = card.querySelector('input[type="radio"]:checked');
+
+            if (selectedOption) {
+                answers.push({
+                    question_id: questionId,
+                    answer: selectedOption.value
+                });
+            } else {
+                allAnswered = false;
+            }
+        });
+
+        if (!allAnswered) {
+            alert("يرجى الإجابة على جميع الأسئلة قبل الإرسال.");
+            return;
+        }
+
+        // إرسال البيانات إلى السيرفر
+        fetch('/submit-quiz/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCSRFToken()
+            },
+            body: JSON.stringify({ answers })
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);
+        })
+        .catch(error => console.error('Error:', error));
+    });
+
+    // جلب CSRF Token من الكوكيز
+    function getCSRFToken() {
+        return document.cookie.split('; ')
+            .find(row => row.startsWith('csrftoken'))
+            ?.split('=')[1];
+    }
+});
+
+</script>
+{% endblock %}
+=======
+    document.addEventListener("DOMContentLoaded", function () {
+        const trackSelect = document.getElementById('interest');
+        const questionCards = document.querySelectorAll('.question-card');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const submitContainer = document.getElementById('submit-container');
+        const submitButton = document.getElementById('submit-quiz');
+        let currentIndex = 0;
+        let visibleQuestions = [];
+    
+        // فلترة الأسئلة بناءً على الـ track المحدد
+        trackSelect.addEventListener("change", function () {
+            const selectedTrackId = this.value;
+    
+            // إخفاء جميع الأسئلة أولًا
+            questionCards.forEach((card) => {
+                card.style.display = "none";
+            });
+    
+            // عرض الأسئلة الخاصة بالـ track المحدد
+            visibleQuestions = Array.from(questionCards).filter(
+                (card) => card.dataset.trackid === selectedTrackId
+            );
+    
+            // إعادة ضبط التنقل
+            currentIndex = 0;
+            if (visibleQuestions.length > 0) {
+                updateQuestionDisplay();
+                prevBtn.disabled = true;
+                nextBtn.disabled = false;
+            } else {
+                prevBtn.disabled = true;
+                nextBtn.disabled = true;
+                submitContainer.style.display = "none";
+            }
+        });
+    
+        function updateQuestionDisplay() {
+            visibleQuestions.forEach((card, index) => {
+                card.style.display = index === currentIndex ? "block" : "none";
+            });
+    
+            prevBtn.disabled = currentIndex === 0;
+            nextBtn.disabled = currentIndex === visibleQuestions.length - 1;
+    
+            // إظهار زر الإرسال في آخر سؤال
+            submitContainer.style.display = (currentIndex === visibleQuestions.length - 1) ? "block" : "none";
+        }
+    
+        prevBtn.addEventListener("click", function () {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateQuestionDisplay();
+            }
+        });
+    
+        nextBtn.addEventListener("click", function () {
+            if (currentIndex < visibleQuestions.length - 1) {
+                currentIndex++;
+                updateQuestionDisplay();
+            }
+        });
+        function submitAnswers(answersList) {
+    fetch('/submit-answer/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')  // تأكد من إرسال CSRF Token
+        },
+        body: JSON.stringify({
+            answers: answersList
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message) {
+            alert(data.message);
+        } else {
+            alert('خطأ: ' + data.error);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+// دالة لجلب CSRF Token من الكوكيز
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        let cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            let cookie = cookies[i].trim();
+            if (cookie.startsWith(name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+        // إرسال الإجابات إلى السيرفر
+        if (submitButton) {
+            submitButton.addEventListener('click', function () {
+                const answers = [];
+                let allAnswered = true;
+    
+                visibleQuestions.forEach((card) => {
+                    const questionId = card.getAttribute('data-questionid');  
+                    const selectedOption = card.querySelector('input[type="radio"]:checked');
+    
+                    if (selectedOption) {
+                        answers.push({
+                            question_id: questionId,
+                            answer: selectedOption.value
+                        });
+                    } else {
+                        allAnswered = false;
+                    }
+                });
+    
+                if (!allAnswered) {
+                    alert("يرجى الإجابة على جميع الأسئلة قبل الإرسال.");
+                    return;
+                }
+    
+                // تتبع البيانات قبل الإرسال
+                console.log("🔵 البيانات المرسلة إلى السيرفر:", answers);
+    
+                // إرسال البيانات إلى السيرفر
+                fetch('/submit-quiz/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCSRFToken()
+                    },
+                    body: JSON.stringify({ answers })
+                })
+                .then(response => {
+                    console.log("🟢 تم إرسال الطلب بنجاح. جاري معالجة الرد...");
+                    return response.json();
+                })
+                .then(data => {
+                    console.log("🟢 رد السيرفر:", data);
+                    alert(data.message);
+                })
+                .catch(error => {
+                    console.error('🔴 خطأ أثناء إرسال البيانات:', error);
+                });
+            });
+        } else {
+            console.error("❌ لم يتم العثور على زر الإرسال submit-quiz");
+        }
+    
+        // جلب CSRF Token من الكوكيز أو من المدخل المخفي
+        function getCSRFToken() {
+            let csrfToken = document.querySelector('[name=csrfmiddlewaretoken]')?.value;
+            if (!csrfToken) {
+                csrfToken = document.cookie.split('; ').find(row => row.startsWith('csrftoken'))?.split('=')[1];
+            }
+            console.log("🟡 CSRF Token:", csrfToken);
+            return csrfToken;
+        }
+    });
+    </script>
+{% endblock %}
+>>>>>>> 9bb57c1 (Updated project files with latest changes)

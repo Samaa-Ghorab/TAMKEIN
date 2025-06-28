@@ -1,0 +1,16 @@
+{% extends "home/homepage.html" %}
+
+{% block content %}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;900&display=swap" rel="stylesheet">
+
+<div class="form-container" style="width: 500px; margin: 40px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); background: #ecf0f3; font-family: 'Poppins', sans-serif;">
+    <h2 style="text-align: center; font-size: 24px; font-weight: 900; color: #1DA1F2;">Sign Up</h2>
+    <form method="post" enctype="multipart/form-data" style="display: flex; flex-direction: column; text-align: left;">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn" style="background-color: #1DA1F2; color: white; border: none; padding: 10px; border-radius: 20px; cursor: pointer; box-shadow: 6px 6px 6px #cbced1, -6px -6px 6px white; transition: 0.5s; margin-top: 20px; font-weight: 900;">
+            Sign Up
+        </button>
+    </form>
+</div>
+{% endblock %}

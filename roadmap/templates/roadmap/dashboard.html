@@ -1,0 +1,20 @@
+<!-- في roadmap/dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+</head>
+<body>
+    <h2>Welcome, {{ user.username }}</h2>
+    
+    {% if roadmap %}
+        <h3>Your Personalized Roadmap:</h3>
+        <p>Track Name: {{ roadmap.track_name }}</p>
+        <p>Track URL: <a href="{{ roadmap.track_url }}">{{ roadmap.track_url }}</a></p>
+    {% else %}
+        <p>No roadmap available for your answers. Please try again later.</p>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,29 @@
+<form method="POST" action="{% url 'submit_answers' %}">
+    {% csrf_token %}
+    {% for track in tracks %}
+        <h3>Track: {{ track.name }}</h3>
+        {% for question in track.questions.all %}
+            <div class="form-group">
+                <label>{{ question.question }}</label>
+                <input type="hidden" name="questionid" value="{{ question.id }}">  <!-- إرسال معرف السؤال -->
+                <div>
+                    <input type="radio" name="answer_{{ question.id }}" value="{{ question.option_a }}" required>
+                    <label>{{ question.option_a }}</label>
+                </div>
+                <div>
+                    <input type="radio" name="answer_{{ question.id }}" value="{{ question.option_b }}">
+                    <label>{{ question.option_b }}</label>
+                </div>
+                <div>
+                    <input type="radio" name="answer_{{ question.id }}" value="{{ question.option_c }}">
+                    <label>{{ question.option_c }}</label>
+                </div>
+                <div>
+                    <input type="radio" name="answer_{{ question.id }}" value="{{ question.option_d }}">
+                    <label>{{ question.option_d }}</label>
+                </div>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    <button type="submit">Submit Quiz</button>
+</form>

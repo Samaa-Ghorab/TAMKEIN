@@ -1,0 +1,31 @@
+{% extends "home/homepage.html" %}
+
+{% block content %}
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<div class="container mt-5">
+    <div class="row">
+        {% if playlists %}
+            {% for playlist in playlists %}
+                <div class="col-md-4 mb-4">
+                    <div class="card" style="width: 18rem;">
+                        <img src="{{ playlist.image_url|default:'https://via.placeholder.com/150' }}" class="card-img-top" alt="{{ playlist.name }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ playlist.name }}</h5>  <!-- Playlist name -->
+                            <p class="card-text">Rating: {{ playlist.rating|default:'N/A' }}</p>  <!-- Rating -->
+                            <p class="card-text">Duration: {{ playlist.duration|default:'Unknown' }}</p>  <!-- Duration -->
+                            <p class="card-text">Difficulty Level: {{ playlist.difficultylevel|default:'N/A' }}</p>  <!-- Difficulty -->
+                            <a href="{{ playlist.url }}" class="btn btn-primary" target="_blank">Go to Video</a> <!-- Video URL -->
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No playlists available.</p>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

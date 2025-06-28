@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questionnaire</title>
+</head>
+<body>
+    <h1>Questionnaire</h1>
+
+    <!-- عرض السؤال الحالي -->
+    <form method="POST">
+        {% csrf_token %}
+        <p>{{ question.question }}</p>
+        {% if question.options %}
+            <div>
+                {% for option in question.options %}
+                    <label>
+                        <input type="radio" name="answer" value="{{ option }}" required>
+                        {{ option }}
+                    </label><br>
+                {% endfor %}
+            </div>
+        {% else %}
+            <textarea name="answer" rows="4" cols="50" required></textarea>
+        {% endif %}
+        <button type="submit">Next</button>
+    </form>
+</body>
+</html>

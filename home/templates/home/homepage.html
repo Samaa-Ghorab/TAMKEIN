@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<<<<<<< HEAD
+=======
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+>>>>>>> 9bb57c1 (Updated project files with latest changes)
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Platform{% endblock %}</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: sans-serif; /* Example: Arial, sans-serif */
+        }
+
+        nav {
+            background-color: #333; /* Dark background */
+            padding: 10px 0; /* Top and bottom padding */
+            margin-bottom: 20px; 
+        }
+
+        nav ul {
+            list-style: none; 
+            margin: 0;
+            padding: 0;
+            display: flex; /* Display list items horizontally */
+            justify-content: center; /* Center the list items */
+        }
+
+        nav li {
+            margin: 0 20px; /* Spacing between list items */
+        }
+
+        nav a {
+            color: #fff; /* White text */
+            text-decoration: none; /* Remove underline */
+            font-weight: bold; 
+        }
+
+        nav a:hover {
+            color: #007bff; /* Blue hover effect */
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="{% url 'homepage' %}">Home</a></li>
+            {% comment %} <li><a href="{% url 'roadmap_flowchart' %}">Roadmap</a></li> {% endcomment %}
+            <li><a href="{% url 'all_courses' %}">Playlists</a></li>
+    
+            {% if user.is_authenticated %}
+                <!-- إذا كان المستخدم مسجلاً دخوله -->
+                <a href="{% url 'logout' %}">Logout</a>
+            {% else %}
+                <!-- إذا لم يكن المستخدم مسجلاً دخوله -->
+                <li><a href="{% url 'login' %}">Login</a></li>
+                <li><a href="{% url 'signup' %}">Sign Up</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+    
+
+    {% block content %}
+        <h1>Welcome to Our Platform</h1>
+        <p>Learn and grow with personalized courses and roadmaps.</p>
+    {% endblock %}
+</body>
+</html>
