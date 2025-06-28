@@ -10,9 +10,9 @@ from users import views as user_views  # إضافة views الخاصة بـ user
 from django.conf import settings
 from django.conf.urls.static import static
 # from roadmap.views import AnswerViewSet
-from courses.views import PlaylistViewSet
+# from courses.views import PlaylistViewSet
 # from questionnaire.views import AnswerViewSet,QuestionViewSet
-from users.views import UserViewSet
+# from users.views import UserViewSet
 # from recommendations.views import RecommendationViewSet
 
 
