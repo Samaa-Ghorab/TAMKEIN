@@ -65,4 +65,4 @@ jobs:
         with:
           app-name: 'Tamkein'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4C21012340454F2F80B3B1CA013234F4 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1DCA25F115E24776A87CC96337F702F2 }}
