@@ -49,7 +49,7 @@
         <ul>
             <li><a href="{% url 'homepage' %}">Home</a></li>
             {% comment %} <li><a href="{% url 'roadmap_flowchart' %}">Roadmap</a></li> {% endcomment %}
-            <li><a href="{% url 'all_courses' %}">Playlists</a></li>
+            {% comment %} <li><a href="{% url 'all_courses' %}">Playlists</a></li> {% endcomment %}
     
             {% if user.is_authenticated %}
                 <!-- إذا كان المستخدم مسجلاً دخوله -->
